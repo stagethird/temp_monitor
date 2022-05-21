@@ -21,6 +21,8 @@ def dataWriter(data):
     """
     This function writes the temp (in degrees C and F), the relative humidity,
     and a time stamp to a file named 'temp_monitor_log.csv'.
+    It takes a list containing 3 numbers, and returns an int, which is the
+    current hour.
     """
     import os
     import csv
@@ -41,10 +43,13 @@ def dataWriter(data):
         if fileExist == False:
             writer.writerow(header)
         writer.writerow(data)
-    return
+    return datetime.datetime.now().hour
 
 def LED_Function(temp):
-    """This function controls the function of the indicator LED"""
+    """
+    This function controls the function of the indicator LED.
+    It takes a number, and returns nothing.
+    """
     import RPi.GPIO as GPIO
 
     threshold = 80
@@ -56,13 +61,49 @@ def LED_Function(temp):
         GPIO.output(12, GPIO.LOW)
     return
 
+def emailSender(data):
+    """
+    This function sends an email via SMTP using parameters defined below.
+    It takes a list of three numbers, and returns nothing.
+    """
+    import smtplib
+
+    # Email variables
+    serverAddress = "smtp.HOSTDOMAIN.com"
+    loginName = "LOGIN"
+    loginPassword = "PASSWORD"
+    senderAddress = "SENDER@HOSTDOMAIN.com"
+    recipientAddress = "RECIPIENT@DOMAIN.com"
+
+    emailBody = """\
+Daily climate report from steve-pi0.
+
+The current temperature is:
+{} Degrees C.
+{} Degrees F.
+The relative humidity is:
+{}%"""
+
+    # Send email here
+    server = smtplib.SMTP_SSL(serverAddress, 465)
+    server.login(loginName, loginPassword)
+    server.sendmail(
+        senderAddress,
+        recipientAddress,
+        emailBody.format(data[0], data[1], data[2]))
+    server.quit()
+    return
+
 def main():
     import sys
 
     try:
         data = readAHT20()
-        dataWriter(data)
+        hour = dataWriter(data)
         LED_Function(data[1])
+        # If it's 4:00 PM, send out a status email.
+        if hour == 16:
+            emailSender(data)
         sys.exit(0)
 
     except Exception as e:
