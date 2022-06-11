@@ -76,7 +76,7 @@ def emailSender(data):
     recipientAddress = "RECIPIENT@DOMAIN.com"
 
     emailBody = """\
-Daily climate report from steve-pi0.
+Daily climate report from COMPUTERNAME.
 
 The current temperature is:
 {} Degrees C.
