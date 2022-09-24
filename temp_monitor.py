@@ -67,16 +67,17 @@ def emailSender(data):
     It takes a list of three numbers, and returns nothing.
     """
     import smtplib
+    import constants
 
     # Email variables
-    serverAddress = "smtp.HOSTDOMAIN.com"
-    loginName = "LOGIN"
-    loginPassword = "PASSWORD"
-    senderAddress = "SENDER@HOSTDOMAIN.com"
-    recipientAddress = "RECIPIENT@DOMAIN.com"
+    serverAddress = constants.SERVERADDRESS
+    loginName = constants.LOGINNAME
+    loginPassword = constants.LOGINPASSWORD
+    senderAddress = constants.SENDERADDRESS
+    recipientAddress = constants.RECIPIENTADDRESS
 
     emailBody = """\
-Daily climate report from COMPUTERNAME.
+Daily climate report from {}.
 
 The current temperature is:
 {} Degrees C.
@@ -90,7 +91,7 @@ The relative humidity is:
     server.sendmail(
         senderAddress,
         recipientAddress,
-        emailBody.format(data[0], data[1], data[2]))
+        emailBody.format(constants.COMPUTERNAME, data[0], data[1], data[2]))
     server.quit()
     return
 
