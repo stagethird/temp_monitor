@@ -21,4 +21,4 @@ I've uploaded a copy of of the log file, named `temp_monitor_log.csv`.
 
 -----
 I've uploaded a `Jupyter Notebook` as well, showing various ways that I've
-plotted and analysed the data logged.
+plotted and analysed the data logged. [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/stagethird/temp_monitor/blob/master/temp_monitor.ipynb)
