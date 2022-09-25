@@ -15,3 +15,10 @@ account details that are stored as constants in a seperate module.
 -----
 The program is designed to be run by the Raspberry Pi's `cron` task
 scheduler, it runs once then exits without writing anything to `stdout`.
+
+-----
+I've uploaded a copy of of the log file, named `temp_monitor_log.csv`.
+
+-----
+I've uploaded a `Jupyter Notebook` as well, showing various ways that I've
+plotted and analysed the data logged.
